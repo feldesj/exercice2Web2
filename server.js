@@ -1,8 +1,12 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
+
+const __dirname = path.resolve();
 
 const app = express();
 app.use(cors());
+app.use(express.static(path.join(__dirname, "build")));
 
 const classes = ["warrior", "mage", "ranger"];
 
@@ -11,6 +15,11 @@ app.get("/newClass", (req, res) => {
   console.log(index);
   const yourNewClass = classes[index];
   res.send(yourNewClass);
+});
+console.log(__dirname);
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 app.listen(80);
